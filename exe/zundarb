@@ -1,0 +1,33 @@
+# frozen_string_literal: true
+
+require 'zundarb'
+
+options = {}
+OptionParser.new do |opts|
+  opts.banner = "Usage: opttest.rb [options]"
+  opts.on("--sid ID", "Speaker ID") do |sid|
+    options[:speaker_id] = sid.to_i
+  end
+  opts.on("--vol Volume", "Volume") do |vol|
+    options[:volume] = vol.to_f
+  end
+  opts.on("--speed Speed", "Speaking speed") do |speed|
+    options[:speed] = speed.to_f
+  end
+end.parse!
+
+z = Zundarb.new
+text = ARGV[0]
+unless text
+  STDERR.puts("ERROR: No text entered.")
+  exit(false)
+end
+z.query(
+    text,
+    verbose: false,
+    speaker_id: options[:speaker_id],
+    volume: options[:volume],
+    speed: options[:speed]
+)
+z.wave
+z.play

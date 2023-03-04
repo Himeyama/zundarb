@@ -1,31 +1,56 @@
 # Zundarb
+## バックエンドでサーバーを起動
+このコマンドを使用するには、バックグラウンドで 
+VOICEVOX のサーバーを起動する必要があります。
 
-TODO: Delete this and the text below, and describe your gem
+```ps1
+foreach ($network in Get-NetIPAddress){ if($network.IPAddress -match "^192\.168\."){$hostaddr = $network.IPAddress} }
+."${env:userprofile}\AppData\Local\Programs\VOICEVOX\run.exe" --host $hostaddr
+```
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/zundarb`. To experiment with that code, run `bin/console` for an interactive prompt.
+## インストール
+Gem をインストールし、アプリケーションの Gemfile に追加します。
 
-## Installation
+    $ bundle add zundarb
 
-TODO: Replace `UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG` with your gem name right after releasing it to RubyGems.org. Please do not do it earlier due to security reasons. Alternatively, replace this section with instructions to install your gem from git if you don't plan to release to RubyGems.org.
+Bundler で依存関係を管理していない場合は、以下のように実行して Gem をインストールしてください。
 
-Install the gem and add to the application's Gemfile by executing:
+    $ gem install zundarb
 
-    $ bundle add UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
+ソースコードからインストールする場合は、以下のコマンドを実行してください。
 
-If bundler is not being used to manage dependencies, install the gem by executing:
+    $ rake install
 
-    $ gem install UPDATE_WITH_YOUR_GEM_NAME_PRIOR_TO_RELEASE_TO_RUBYGEMS_ORG
 
-## Usage
+## 使用法
+    $ zundarb -h
 
-TODO: Write usage instructions here
+`--sid` は `<IP ADDR>:50021/speakers` を参照してください。
 
-## Development
+## テスト
+以下のコマンドでテストを実行できます。
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+```bash
+bundle exec zundarb ずんだもんなのだ
+```
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+生成された音声は `voice/` に保存されます。
 
-## Contributing
+### 使用例
+```bash
+# ずんだもんノーマル (3)、音量 0.5、速度 1.5
+zundarb 生麦生米生卵 --sid 3 --vol 0.5 --speed 1.5
+```
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/zundarb.
+## 開発
+レポをチェックアウトした後、`bin/setup` を実行して依存関係をインストールします。また、`bin/console`を実行すると、インタラクティブなプロンプトが表示され、実験することができます。
+
+この Gem をローカルマシンにインストールするには、
+`bundle exec rake install` を実行します。
+新しいバージョンをリリースするには、`version.rb`のバージョン番号を更新し、`bundle exec rake release`を実行します。
+このとき、そのバージョンの Git タグが作成され、
+Gitコミットと作成したタグをプッシュし、
+`.gem`ファイルを [rubygems.org] (https://rubygems.org) へプッシュします。
+
+## 貢献
+バグレポートやプルリクエストはGitHubのhttps://github.com/himeyama/zundarbで受け付けています。
