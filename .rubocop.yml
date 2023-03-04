@@ -1,0 +1,9 @@
+AllCops:
+  NewCops: enable
+
+MethodLength:
+  CountComments: false
+  Max: 32
+
+AbcSize:
+  Max: 32
